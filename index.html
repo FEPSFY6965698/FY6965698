@@ -27,8 +27,34 @@
       }
   </script>
 
+  <script type="text.javascript2">
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number','Age');
+      data.addColumn('number','Salary');
+
+      data.addRows([
+        [25,40000],
+        [30,50000],
+        [35,60000],
+        [40,75000],
+        [45,80000],
+        [50,90000],
+      ]);
+      var options = {
+        title:'Age vs. Salary',
+        hAxis:{ title:'Age'},
+        vAxis:{ title:'Salary'}
+      };
+      var chart = new google.visualization.ScatterChart(documentgetElementById('chart_div'));
+      chart.draw(data,options);
+
+    }
+  </script>
+
 </head>
    <div id="chart_div"></div>
+  
     <img src="WebBanner2026.png" alt="Banner" width="1200" height="300">
       <h1><b>ENG0018 Computer Laboratory 2026/27</b></h1>
       <h2>Student URN: 6965698</h2>
