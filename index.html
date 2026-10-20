@@ -31,7 +31,11 @@
       }
   </script>
 
-  <script type="text.javascript2">
+   <div id="chart_div"></div>
+   <script type="text/javascript">
+	google.charts.load('current', { 'packages' : ['corechart'] });
+	google.charts.setOnLoadCallback(drawChart);
+  
     function drawChart() {
       var data = new google.visualization.DataTable();
       data.addColumn('number','Age');
@@ -50,7 +54,7 @@
         hAxis:{ title:'Age'},
         vAxis:{ title:'Salary'}
       };
-      var chart = new google.visualization.ScatterChart(documentgetElementById('chart_div'));
+      var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
       chart.draw(data,options);
 
     }
