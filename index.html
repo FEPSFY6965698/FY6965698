@@ -71,18 +71,41 @@
 		const username = 'FEPSFY6965698';
 		const repo = 'FY6965698'; 
 
-		const url
+		const url = 'https://api.github.com/repos/${username}/${repo}/commits';
+
+		try {
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Accept': 'application/vnd.github.v3+json',
+				}
+			});
+			if (!reponse.ok) {
+				throw new Error('Error fetching data: ${response.status} - ${response.statusText}');
+			}
+
+			const commits = await response.json();
+			if (commits && commits.length > 0) {
+				const lastCommitDate = new Date(commits[0].commit.committer.date);
+
+				document.getElementById('last-updated').innerText = 'Last Modified Time: ${lastCommitDate.toLocaleString()}';
+			} else {
+				document.getElementById('last-updated').innerText = 'No commits found in the repository.';
+			}
+		} catch (error) {
+			console.error('Error fetching the last updated time:', error);
+			document.getElementById('last-updated').innerText = 'Error fetching update time. Please check the repository details.';
+		}
+	}
+
+	async function verifyLastUpdatedTime() {
+		document.getElementById('last-updated').innerText = 'Verifying...';
+		await getLastUpdatedTime();
+		alert("Last modified time has been successfully verified from GitHub API.");
+	}
+
+	window.onload = getLastUpdatedTime;
 </script>
-
-
-
-
-
-
-
-
-
-
 
 </body>
     <img src="WebBanner2026.png" alt="Banner" width="1200" height="300">
@@ -150,6 +173,34 @@
 </tr>
 </table> 
 
+
+<p id="totalWordCount"></p>
+
+<hr>
+
+<script>
+	function displayWordCount(sectionId, outputId) {
+		const text = document.getElementById(sectionId).textContent;
+
+		const wordArray = text.trim().split(/\s+/);
+
+		const wordCount = wordArray.length;
+
+		return wordCount; 
+	}
+
+	function displayTotalWordCount() {
+		const IntroductionCount = displayWordCount("Introduction_InText");
+		const AnalysisCount = displayWordCount("Analysis_InText");
+
+		const totalWordCount = IntroductionCount + AnalysisCount;
+
+		document.getElementById("totalWordCount").innerText = 'Total word count: ${totalWordCount}';
+	}
+
+	window.onload = displayTotalWordCount;
+</script>
+	
 <h3 id="Abstract">Abstract</h3>
   <p class="ex1">
 <pre>
@@ -163,7 +214,7 @@
 
 <h3 id="Introduction">Introduction</h3>
 <p class="ex1">
-<pre>
+<pre id="Introduction_InText">
     “Active Learning (Angluin, 1988, Cohn et al., 1994) is a paradigm where a concept is learnt by an
     intelligent machine through the interaction of an oracle with the machine system, over a sequence of
     learning epochs. A distinctive component in an active system is the querying strategy, used to sample
@@ -182,7 +233,7 @@
   
 <h3 id="Analysis and discussion">Analysis and discussion</h3>
   <p class="ex1">
-<pre>
+<pre id="Analysis_InText">
 Bridge deck repair durability is the subject of much recent research such as in <a href=”https://www.icevirtuallibrary.com/doi/full/10.1680/jbren.21.00034”>Toshihiko et al(2023).</a>, Table 1: Data on cost and lifespanof bridge repairs
 </pre>
 <table>
