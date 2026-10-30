@@ -80,7 +80,7 @@
 					'Accept': 'application/vnd.github.v3+json',
 				}
 			});
-			if (!reponse.ok) {
+			if (!response.ok) {
 				throw new Error('Error fetching data: ${response.status} - ${response.statusText}');
 			}
 
